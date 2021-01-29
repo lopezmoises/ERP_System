@@ -17,6 +17,7 @@ public class StockController {
 
     public void removeStock(int idProduct, int quantity) {
         int acumQuantity = 0;
+        int poll = 0;
         boolean controlExists = false;
 
         for (Product product : products) {
@@ -29,7 +30,7 @@ public class StockController {
                 }
 
             }
-            if (acumQuantity > 0 && controlExists) {
+            if (acumQuantity > 0) {
                 if (acumQuantity < quantity) {
                     if (insuficientStock(acumQuantity).equalsIgnoreCase("si")) {
                         product.getStock().clear();
@@ -38,7 +39,7 @@ public class StockController {
                     for (Stock stock : product.getStock()) {
                         if (stock.getQuantity() <= quantity) {
                             quantity -= stock.getQuantity();
-                            product.getStock().poll();
+                            poll++;
                             System.out.println(quantity);
                         } else {
                             if (quantity != 0) {
@@ -47,14 +48,20 @@ public class StockController {
                             }
                         }
                     }
+                    for (int i = 0; i < poll; i++) {
+                        product.getStock().poll();
+                    }
                 }
 
-            } else {
-                System.out.println("Producto no disponible");
             }
         }
-        System.out.println(acumQuantity + " - " + controlExists + "Ant");
-
+        if (!controlExists) {
+            System.out.println("Producto no disponible");
+        } else {
+            if (acumQuantity == 0) {
+                System.out.println("Sin Stock");
+            }
+        }
     }
 
     private String insuficientStock(int acumQuantity) {

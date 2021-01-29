@@ -90,7 +90,7 @@ public class Dao {
         int month = 1;
         int year = 2010;
         for (Product product : products) {
-            for (int i = 0; i < random.nextInt(20) + 1; i++) {
+            for (int i = 0; i < random.nextInt(5) + 1; i++) {
 
                 Stock entry = new Stock();
 
