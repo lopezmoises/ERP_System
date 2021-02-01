@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import ads.Controller.ProductController;
 import ads.Controller.StockController;
-import ads.dao.Dao;
+import ads.dao.*;
 
 /**
  * ERP_System
@@ -24,7 +24,7 @@ public final class App {
 
     public static void Menu() {
 
-        ProductController productController = new ProductController(dao.products);
+        ProductController productController = new ProductController(dao.products, dao.node);
         StockController stockController = new StockController(dao.products);
         int opcion = -1;
 
@@ -33,6 +33,7 @@ public final class App {
         System.out.println("1- Buscar producto por código");
         System.out.println("2- Buscar producto por nombre");
         System.out.println("3- Retirar productos por código");
+        System.out.println("4- Buscar producto por código en arbol binario");
         System.out.println("0- Salir\n");
 
         opcion = scannerInt(null);
@@ -54,6 +55,10 @@ public final class App {
                 stockController.removeStock(idProduct, quantity);
                 Menu();
                 break;
+            case 4:
+                productController.getByIdNode(scannerInt("A continuacion ingrese el código"));
+                Menu();
+                break;
             default:
                 Menu();
                 break;
@@ -63,7 +68,8 @@ public final class App {
 
     static int scannerInt(String msj) {
         int entero = 0;
-        if (msj != null) System.out.println(msj);
+        if (msj != null)
+            System.out.println(msj);
         try {
             entero = scanner.nextInt();
         } catch (InputMismatchException e) {

@@ -19,6 +19,7 @@ public class StockController {
         int acumQuantity = 0;
         int poll = 0;
         boolean controlExists = false;
+        ArrayList<String> entradas = new ArrayList<String>();
 
         for (Product product : products) {
             if (product.getId() == idProduct) {
@@ -26,7 +27,7 @@ public class StockController {
 
                 for (Stock stock : product.getStock()) {
                     acumQuantity += stock.getQuantity();
-                    System.out.println("Entrada: " + stock.getQuantity());
+                    entradas.add("Entrada: " + stock.getQuantity());
                 }
 
             }
@@ -34,6 +35,10 @@ public class StockController {
                 if (acumQuantity < quantity) {
                     if (insuficientStock(acumQuantity).equalsIgnoreCase("si")) {
                         product.getStock().clear();
+                        System.out.println("Entradas eliminadas");
+                        for (String ent : entradas) {
+                            System.out.println(ent);
+                        }
                     }
                 } else {
                     for (Stock stock : product.getStock()) {
@@ -52,7 +57,7 @@ public class StockController {
                         product.getStock().poll();
                     }
                 }
-
+                break;
             }
         }
         if (!controlExists) {
@@ -69,10 +74,8 @@ public class StockController {
         System.out.println("si/no");
         String text = scann.nextLine();
         if (text.equalsIgnoreCase("si") || text.equalsIgnoreCase("no")) {
-
             return text;
         } else {
-
             return insuficientStock(acumQuantity);
         }
     }

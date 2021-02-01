@@ -22,10 +22,12 @@ public class Dao {
 
     private final Random random = new Random();
     public ArrayList<Product> products = new ArrayList<Product>();
+    public Node node;
 
     public Dao() {
         readCSV();
         entriesStock();
+        loadNode();
     }
 
     private void readCSV() {
@@ -90,7 +92,7 @@ public class Dao {
         int month = 1;
         int year = 2010;
         for (Product product : products) {
-            for (int i = 0; i < random.nextInt(5) + 1; i++) {
+            for (int i = 0; i < random.nextInt(20) + 1; i++) {
 
                 Stock entry = new Stock();
 
@@ -100,7 +102,7 @@ public class Dao {
                 entry.setDate(LocalDateTime.of(year, month, day, random.nextInt(23) + 1, random.nextInt(59) + 1,
                         random.nextInt(59) + 1));
                 stock.add(entry);
-                
+
                 if (day < 28) {
                     day++;
                 } else {
@@ -108,13 +110,22 @@ public class Dao {
                     if (month < 12) {
                         month++;
                     } else {
-                        month =1;
+                        month = 1;
                         year++;
                     }
                 }
             }
         }
         return stock;
+    }
+
+    private void loadNode() {
+
+        node = new Node(1, products.get(0));
+
+        for (int i = 2; i < products.size(); i++) {
+            node.add(i, products.get(i - 1));
+        }
     }
 
 }
