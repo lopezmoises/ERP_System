@@ -34,6 +34,7 @@ public final class App {
         System.out.println("2- Buscar producto por nombre");
         System.out.println("3- Retirar productos por código");
         System.out.println("4- Buscar producto por código en arbol binario");
+        System.out.println("5- Buscar producto por código utilizando busqueda binaria");
         System.out.println("0- Salir\n");
 
         opcion = scannerInt(null);
@@ -56,6 +57,10 @@ public final class App {
                 Menu();
                 break;
             case 4:
+                productController.getByIdNode(scannerInt("A continuacion ingrese el código"));
+                Menu();
+                break;
+            case 5:
                 productController.getByIdNode(scannerInt("A continuacion ingrese el código"));
                 Menu();
                 break;

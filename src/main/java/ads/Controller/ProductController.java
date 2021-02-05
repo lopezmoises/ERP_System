@@ -61,4 +61,35 @@ public class ProductController {
             System.out.println("Id no encontrado");
         }
     }
+
+    public void getByIdBinary(int id) {
+        Product product = binarySearch(id, products);
+        if (product != null) {
+            System.out.println("id: " + product.getId());
+            System.out.println("Nombre: " + product.getName());
+            System.out.println("Precio: " + product.getPrices_currency() + " " + product.getPrices_amountMax());
+            System.out.println(product.printStock() + "\n");
+        } else {
+            System.out.println("Id no encontrado");
+        }
+    }
+
+    public Product binarySearch(int id, ArrayList<Product> products) {
+        int size = products.size();
+        int middle = size / 2;
+
+        if (size > 1) {
+            if (products.get(middle).getId() == id) {
+                return products.get(middle);
+            } else if (products.get(middle).getId() > id) {
+                ArrayList<Product> halfArray = (ArrayList<Product>) products.subList(0, middle);
+                return binarySearch(id, halfArray);
+            } else {
+                ArrayList<Product> halfArray = (ArrayList<Product>) products.subList(middle, size);
+                return binarySearch(id, halfArray);
+            }
+        } else {
+            return null;
+        }
+    }
 }
